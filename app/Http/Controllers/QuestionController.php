@@ -47,7 +47,7 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
-        return(Question::all());
+        // return(Question::all());
     }
 
     /**
