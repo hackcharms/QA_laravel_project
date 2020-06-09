@@ -1,5 +1,6 @@
 <?php
 
+use App\Question;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/Question','QuestionController');
+// Route::get('Question/{id}','QuestionController@singleShow');
