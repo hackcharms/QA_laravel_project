@@ -13,6 +13,12 @@
                             <a href="{{route('Question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
                         </div>
                     @endauth
+                    @guest
+
+                    <div class="ml-auto">
+                        <a href="{{route('login')}}" class="btn btn-outline-secondary">Login to Ask Questions</a>
+                    </div>
+                    @endguest
                 </div>
                 </div>
 
@@ -35,17 +41,21 @@
                             <div class="media-body">
                                 <div class="d-flex align-items-center">
                                     <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
-                                    {{-- {{$question->id==Auth::}} --}}
-                                    @if ($question)
+                                    {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
                                         <div class="ml-auto">
+                                    @if(Auth::user()->can('update-question',$question))
                                         <a href="{{route('Question.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        @endif
+                                    {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
+                                    @if(Auth::user()->can('delete-question',$question))
                                         <form class="form-delete" method="POST" action="{{route('Question.destroy',$question->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-outline-danger" onclick="confirm('Cofirm Question Deletion?')"> Delete</button>
                                         </form>
+                                        @endif
                                     </div>
-                                    @endif
+
 
                                 </div>
 

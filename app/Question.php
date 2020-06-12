@@ -19,7 +19,7 @@ class Question extends Model
     }
     public function getUrlAttribute()
     {
-        return route("Question.show",$this->id);
+        return route("Question.show",$this->slug);
         // return '#';
     }
     public function getCreatedDateAttribute()
@@ -37,5 +37,9 @@ class Question extends Model
         {
             return 'unanswered';
         }
+    }
+    public function getBodyHtmlAttribute(Type $var = null)
+    {
+        # code...
     }
 }
