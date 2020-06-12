@@ -8,9 +8,11 @@
                 <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h2>All Questions</h2>
-                    <div class="ml-auto">
-                        <a href="{{route('Question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
-                    </div>
+                    @auth
+                        <div class="ml-auto">
+                            <a href="{{route('Question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
+                        </div>
+                    @endauth
                 </div>
                 </div>
 
@@ -31,7 +33,22 @@
                                 </div>
                             </div>
                             <div class="media-body">
-                                <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
+                                <div class="d-flex align-items-center">
+                                    <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
+                                    {{-- {{$question->id==Auth::}} --}}
+                                    @if ($question)
+                                        <div class="ml-auto">
+                                        <a href="{{route('Question.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        <form class="form-delete" method="POST" action="{{route('Question.destroy',$question->id)}}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-sm btn-outline-danger" onclick="confirm('Cofirm Question Deletion?')"> Delete</button>
+                                        </form>
+                                    </div>
+                                    @endif
+
+                                </div>
+
                                 <p class="lead">
                                     Asked By <a href="{{$question->user->url}}">{{$question->user->name}}</a>
                                     <small class="text-muted">{{$question->created_date}}</small>

@@ -56,6 +56,8 @@ class QuestionController extends Controller
     public function show(Question $question)
     {
         // return(Question::all());
+        dd($question);
+        exit;
     }
 
     /**
@@ -64,9 +66,11 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+
+    public function edit($id)
     {
-        //
+        $question=Question::findOrFail($id);
+        return view("Question.edit",compact("question"));
     }
 
     /**
@@ -76,10 +80,20 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request,$question)
     {
-        //
+        $question=Question::findOrFail($question);
+        // $request=Question::findOrFail($request);
+        $question->update($request->only('title','body'));
+        return redirect()->route('Question.index')->with('success','Updation Success');
     }
+    // public function update(AskQuestionRequest $request,Question  $question)
+    // {
+    //     // dd($question->title);
+    //     // $request=Question::findOrFail($request);
+    //     // $question->update($request->only('title','body'));
+    //     return redirect()->route('Question.index')->with('success','Updation Success');
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -87,8 +101,10 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($question)
     {
-        //
+        $question=Question::findOrFail($question);
+        $question->delete();
+        return redirect()->route('Question.index')->with('success','Question Deleted');
     }
 }
