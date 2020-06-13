@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -43,6 +44,17 @@ class User extends Authenticatable
     public function getUrlAttribute()
     {
         return '#';
+    }
+    public function answers()
+    {
+        $this->HasMany(Answer::class);
+    }
+    public function getAvatarAttribute()
+    {
+        $email = $this->email;
+        // $default = "https://www.somewhere.com/homestar.jpg";
+        $size = 32;
+        return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?s=" . $size;
     }
 
 }

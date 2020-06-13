@@ -26,9 +26,13 @@ class Question extends Model
     {
         return $this->created_at->diffForHumans();
     }
+    public function getUpdatedDateAttribute()
+    {
+        return $this->updated_at->diffForHumans();
+    }
     public function getStatusAttribute()
     {
-        if($this->answers>0){
+        if($this->answers_count>0){
             if($this->best_answer_id)
                 return 'answered-accepted';
             else
@@ -38,8 +42,12 @@ class Question extends Model
             return 'unanswered';
         }
     }
-    public function getBodyHtmlAttribute(Type $var = null)
+    public function getBodyHtmlAttribute()
     {
-        # code...
+        //
+    }
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }

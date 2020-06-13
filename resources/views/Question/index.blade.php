@@ -8,17 +8,10 @@
                 <div class="card-header">
                 <div class="d-flex align-items-center">
                     <h2>All Questions</h2>
-                    @auth
                         <div class="ml-auto">
                             <a href="{{route('Question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
                         </div>
-                    @endauth
-                    @guest
 
-                    <div class="ml-auto">
-                        <a href="{{route('login')}}" class="btn btn-outline-secondary">Login to Ask Questions</a>
-                    </div>
-                    @endguest
                 </div>
                 </div>
 
@@ -31,7 +24,7 @@
                                 <strong>{{$question->votes}}</strong> {{Str::plural('vote',$question->vote)}}
                             </div>
                         <div class="status {{$question->status}}">
-                                <strong>{{$question->answers}}</strong> {{Str::plural('answer',$question->answers)}}
+                                <strong>{{$question->answers_count}}</strong> {{Str::plural('answer',$question->answers_count)}}
                                 </div>
 
                                 <div class="views">
@@ -40,14 +33,18 @@
                             </div>
                             <div class="media-body">
                                 <div class="d-flex align-items-center">
-                                    <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}</a></h3>
+                                <h3 class="mt-0"><a href="{{$question->url}}">{{$question->title}}  </a></h3><sub>
+                                    @if ($question->updated_date!=$question->created_date)
+                                        (Last editted : {{$question->updated_date}})
+                                    @endif
+                                </sub>
                                     {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
                                         <div class="ml-auto">
-                                    @if(Auth::user()->can('update-question',$question))
+                                    @if(Auth::user() && Auth::user()->can('update-question',$question))
                                         <a href="{{route('Question.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
                                         @endif
                                     {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
-                                    @if(Auth::user()->can('delete-question',$question))
+                                    @if(Auth::user() && Auth::user()->can('delete-question',$question))
                                         <form class="form-delete" method="POST" action="{{route('Question.destroy',$question->id)}}">
                                             @csrf
                                             @method('DELETE')

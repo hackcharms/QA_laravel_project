@@ -103,6 +103,8 @@ class QuestionController extends Controller
         // }
         // abort(403,"Access Denied");
         $this->authorize('update',$question);
+        $question->update($request->only('title','body'));
+
         return redirect()->route('Question.index')->with('success','Question Deleted');
 
 
