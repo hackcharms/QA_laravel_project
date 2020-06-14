@@ -61,6 +61,17 @@
                                     <small class="text-muted">{{$question->created_date}}</small>
                                 </p>
                                 {{Str::limit($question->body,250)}}
+                                <div class="float-right">
+                                    <span class="text-muted">Asked {{$question->created_date}}</span>
+                                        <div class="media mt-2">
+                                    <a href="{{$question->user->url}}" class="pr-2">
+                                    <img src="{{$question->user->avatar}}" alt="profile Pic">
+                                    </a>
+                                    <div class="media-body mt-1">
+                                    <a href="{{$question->user->url}}"> {{$question->user->name}}</a>
+                                    </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
