@@ -24,7 +24,7 @@ class QuestionController extends Controller
     {
         // DB::enableQueryLog();
         $questions=Question::with('user')->latest()->paginate('5');
-        return view('Question.index',compact('questions'));
+        return view('question.index',compact('questions'));
         //  dd(DB::getQueryLog());
     }
 
@@ -36,7 +36,7 @@ class QuestionController extends Controller
     public function create()
     {
         $question=new Question();
-        return view('Question.create',compact('question'));
+        return view('question.create',compact('question'));
     }
 
     /**
@@ -50,7 +50,7 @@ class QuestionController extends Controller
         // $question=new Question();
         // $question->title=$request->title;
         $request->user()->questions()->create($request->all());
-        return redirect()->route('Question.index')->with('success','Your Question has been Submitted');
+        return redirect()->route('question.index')->with('success','Your Question has been Submitted');
     }
 
     /**
@@ -61,8 +61,9 @@ class QuestionController extends Controller
      */
     public function show(Question $question)
     {
+
         $question->increment('views');
-        return view('Question.show',compact('question'));
+        return view('question.show',compact('question'));
     }
 
     /**
@@ -72,16 +73,16 @@ class QuestionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($id)
+    public function edit(Question $question)
     {
-        $question=Question::findOrFail($id);
+
         // if(\Gate::allows('update-question',$question))
         // {
-        // return view("Question.edit",compact("question"));
+        // return view("question.edit",compact("question"));
         // }
         // abort(403,"Access Denied");
         $this->authorize('update',$question);
-        return view("Question.edit",compact("question"));
+        return view("question.edit",compact("question"));
 
     }
 
@@ -92,20 +93,20 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(AskQuestionRequest $request,$question)
+    public function update(AskQuestionRequest $request,Question $question)
     {
-        $question=Question::findOrFail($question);
+
         // $request=Question::findOrFail($request);
         // if(\Gate::allows('update-question',$question))
         // {
         //     $question->update($request->only('title','body'));
-        //     return redirect()->route('Question.index')->with('success','Updation Success');
+        //     return redirect()->route('question.index')->with('success','Updation Success');
         // }
         // abort(403,"Access Denied");
         $this->authorize('update',$question);
         $question->update($request->only('title','body'));
 
-        return redirect()->route('Question.index')->with('success','Question Deleted');
+        return redirect()->route('question.index',[$request->previous_page])->with('success','Question Updated');
 
 
     }
@@ -114,7 +115,7 @@ class QuestionController extends Controller
     //     // dd($question->title);
     //     // $request=Question::findOrFail($request);
     //     // $question->update($request->only('title','body'));
-    //     return redirect()->route('Question.index')->with('success','Updation Success');
+    //     return redirect()->route('question.index')->with('success','Updation Success');
     // }
 
     /**
@@ -123,19 +124,19 @@ class QuestionController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy($question)
+    public function destroy(Question $question)
     {
-        $question=Question::findOrFail($question);
+
         // if(\Gate::allows('delete-question',$question))
         // {
         //     $question->delete();
-        //     return redirect()->route('Question.index')->with('success','Question Deleted');
+        //     return redirect()->route('question.index')->with('success','Question Deleted');
         // }
         // abort(403,"Access Denied");
         //     OR Use Policy Method
         $this->authorize('delete',$question);
         $question->delete();
-        return redirect()->route('Question.index')->with('success','Question Deleted');
+        return redirect()->route('question.index')->with('success','Question Deleted');
 
 
     }

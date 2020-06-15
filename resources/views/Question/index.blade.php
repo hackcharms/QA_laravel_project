@@ -9,7 +9,7 @@
                 <div class="d-flex align-items-center">
                     <h2>All Questions</h2>
                         <div class="ml-auto">
-                            <a href="{{route('Question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
+                            <a href="{{route('question.create')}}" class="btn btn-outline-secondary">Ask Questions</a>
                         </div>
 
                 </div>
@@ -41,11 +41,11 @@
                                     {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
                                         <div class="ml-auto">
                                     @if(Auth::user() && Auth::user()->can('update-question',$question))
-                                        <a href="{{route('Question.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        <a href="{{route('question.edit',$question->id)}}" class="btn btn-sm btn-outline-info">Edit</a>
                                         @endif
                                     {{-- @if (Gate::allows(['update-question','delete-question'],$question)) --}}
                                     @if(Auth::user() && Auth::user()->can('delete-question',$question))
-                                        <form class="form-delete" method="POST" action="{{route('Question.destroy',$question->id)}}">
+                                        <form class="form-delete" method="POST" action="{{route('question.destroy',$question->id)}}">
                                             @csrf
                                             @method('DELETE')
                                             <button class="btn btn-sm btn-outline-danger" onclick="confirm('Cofirm Question Deletion?')"> Delete</button>

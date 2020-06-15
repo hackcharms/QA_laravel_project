@@ -19,7 +19,7 @@ class Question extends Model
     }
     public function getUrlAttribute()
     {
-        return route("Question.show",$this->slug);
+        return route("question.show",$this->slug);
         // return '#';
     }
     public function getCreatedDateAttribute()

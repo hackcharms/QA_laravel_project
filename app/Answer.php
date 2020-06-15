@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+    protected $fillable=['body','user_id','question_id'];
     public function question()
     {
         return $this->belongsTo(Question::class);
@@ -28,9 +29,12 @@ class Answer extends Model
         static::created(function($answer){
             $answer->question()->increment('answers_count');
         });
-        static::saved(function($answer)
-    {
-        echo "Answer saved\n";
+    //     static::saved(function($answer)
+    // {
+    //     echo "Answer saved\n";
+    // });
+    static::deleted(function($answer){
+        $answer->question->decrement('answers_count');
     });
     }
 }

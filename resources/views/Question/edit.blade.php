@@ -9,14 +9,18 @@
                 <div class="d-flex align-items-center">
                     <h2>Edit Questions</h2>
                     <div class="ml-auto">
-                        <a href="{{route('Question.index')}}" class="btn btn-outline-secondary">Back to All Questions</a>
+                        <a href="{{route('question.index')}}" class="btn btn-outline-secondary">Back to All Questions</a>
                     </div>
                 </div>
                 </div>
                 <div class="card-body">
                     <h2>Question Form</h2>
-                <form action="{{route('Question.update',$question)}}" method="post">
+                    @php
+                        preg_match('/page=\d+/', url()->previous(), $output_array);
+                    @endphp
+                <form action="{{route('question.update',$question)}}" method="post">
                     @method('put')
+                    <input type="text" name="previous_page" value="{{count($output_array)>0?$output_array[0]:''}}" id="" hidden>
                     @include('layouts._form',['buttonText'=>'Update Question'])
                 </form>
                 </div>
