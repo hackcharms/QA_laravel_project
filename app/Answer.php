@@ -23,6 +23,16 @@ class Answer extends Model
     {
         return $this->updated_at->diffForHumans();
     }
+    public function getStatusAttribute()
+    {
+        return $this->is_best?'vote-accepted':'';
+    }
+    public function getIsBestAttribute()
+    {
+        return $this->id==$this->question->best_answer_id;
+    }
+
+
     public static function boot()
     {
         parent::boot();
@@ -34,7 +44,13 @@ class Answer extends Model
     //     echo "Answer saved\n";
     // });
     static::deleted(function($answer){
-        $answer->question->decrement('answers_count');
+        $question=$answer->question;
+        $question->decrement('answers_count');
+        if($question->best_answer_id==$answer->id)
+        {
+            $question->best_answer_id=NULL;
+            $question->save();
+        }
     });
     }
 }
