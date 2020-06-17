@@ -10,7 +10,7 @@
                         <div class="d-flex align-items-center">
                             <h2>{{$question->title}}</h2><sub>
                                 @if ($question->updated_date!=$question->created_date)
-                                    (Last editted : {{$question->updated_date}})
+                                    (Last Activity : {{$question->updated_date}})
                                 @endif
                             </sub>
 
@@ -22,18 +22,38 @@
                         <hr>
                         <div class="media">
                             <div class="d-flex flex-column vote-controls">
-                                <a title="This question is useful" class="vote-up" >
+                                <a title="This question is useful" class="vote-up {{Auth::guest()?'off':''}}"
+                                onclick="event.preventDefault();document.getElementById('up-vote-question-{{$question->id}}').submit()">
                                     {{-- <i class="fab fa-instagram text-warning"></i> --}}
-                                    <i class="fas fa-caret-up fa-3x"></i>
+                                <i class="fas fa-caret-up fa-3x "></i>
                                 </a>
-                                <span class="votes-count">1230</span>
-                                <a title="this question is not useful" class="vote-down off">
+                                <form id='up-vote-question-{{$question->id}}' action="{{route('question.vote',$question->id)}}" method="post">
+                                    <input type="number" name="vote" value="1" hidden>
+                                    @csrf
+                                </form>
+                            <span class="votes-count">{{$question->votes_count}}</span>
+                                <a title="this question is not useful" class="vote-down {{Auth::guest()?'off':''}}"
+                                onclick="event.preventDefault();document.getElementById('down-vote-question-{{$question->id}}').submit()">
                                     <i class="fas fa-caret-down fa-3x"></i>
                                 </a>
-                                <a title="Click to mark Favorite(double Click to unmark)"  class="favorite mt-2 favorited">
+                                <form id='down-vote-question-{{$question->id}}' action="{{route('question.vote',$question->id)}}" method="post">
+                                    <input type="number" name="vote" value="-1" hidden>
+                                    @csrf
+                                </form>
+                                <a title="Click to mark Favorite(double Click to unmark)"  class="favorite mt-2 {{Auth::guest() ? 'off':($question->is_favorited ?' favorited':'NOT FAVO')}}"
+                                    onclick="event.preventDefault();document.getElementById('favorite-question-{{$question->id}}').submit()">
                                     <i class="fas fa-star fa-2x"></i>
-                                <span class="favorites-count">123</span>
-                            </a>
+                                <span class="favorites-count">{{$question->favorites_count}}</span>
+                                </a>
+
+                                <form id='favorite-question-{{$question->id}}' action="{{route('question.favorites',$question->id)}}" method="post">
+                                    @if (!$question->is_favorited)
+                                    @method('post')
+                                    @else
+                                    @method('Delete')
+                                    @endif
+                                    @csrf
+                                </form>
                             </div>
                             <div class="media-body">
                                 {!!htmlspecialchars($question->body)!!}

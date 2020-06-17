@@ -10,14 +10,24 @@
                 @foreach ($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="This Answer is useful" class="vote-up" >
+                            <a title="This Answer is useful" class="vote-up {{Auth::guest()?'off':''}}"
+                            onclick="event.preventDefault();document.getElementById('up-vote-answer-{{$answer->id}}').submit()">
                                 {{-- <i class="fab fa-instagram text-warning"></i> --}}
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
-                            <span class="votes-count">1230</span>
-                            <a title="this Answer is not useful" class="vote-down off">
+                            <form id='up-vote-answer-{{$answer->id}}' action="{{route('answer.vote',$answer->id)}}" method="post">
+                                <input type="number" name="vote" value="1" hidden>
+                                @csrf
+                            </form>
+                        <span class="votes-count">{{$answer->votes_count}}</span>
+                            <a title="this Answer is not useful" class="vote-down class="vote-up {{Auth::guest()?'off':''}}"
+                            onclick="event.preventDefault();document.getElementById('down-vote-answer-{{$answer->id}}').submit()">
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
+                            <form id='down-vote-answer-{{$answer->id}}' action="{{route('answer.vote',$answer->id)}}" method="post">
+                                <input type="number" name="vote" value="-1" hidden>
+                                @csrf
+                            </form>
                             @can('acceptBestAnswer', $answer)
 
 
