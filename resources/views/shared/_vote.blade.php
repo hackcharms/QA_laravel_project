@@ -8,7 +8,7 @@
     @endphp
 @endif
 
-<a title="This {{ucfirst($modelName)}} is useful." class="vote-up {{Auth::guest()?'off':''}}"
+<a title="This {{ucfirst($modelName)}} is useful." class="vote-up {{Auth::guest()?'off':''}} {{$model->upVoted($model->id)?' text-info ':''}}"
     onclick="event.preventDefault();document.getElementById('up-vote-{{$modelName.'-'.$model->id}}').submit()">
     {{-- <i class="fab fa-instagram text-warning"></i> --}}
     <i class="fas fa-caret-up fa-3x"></i>
@@ -18,7 +18,7 @@
     @csrf
 </form>
 <span class="votes-count">{{$model->votes_count}}</span>
-<a title="This {{ucfirst($modelName)}} is not useful" class="vote-down class=" vote-up {{Auth::guest()?'off':''}}"
+<a title="This {{ucfirst($modelName)}} is not useful" class="vote-down {{Auth::guest()?'off':''}} {{$model->downVoted()?' text-info ':' '}}"
     onclick="event.preventDefault();document.getElementById('down-vote-{{$modelName.'-'.$model->id}}').submit()">
     <i class="fas fa-caret-down fa-3x"></i>
 </a>

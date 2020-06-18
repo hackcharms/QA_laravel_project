@@ -1,3 +1,4 @@
+@if ($answersCount>0)
 <div class="row mt-4">
     <div class="col-md-12">
         <div class="card">
@@ -13,7 +14,7 @@
                         @include('shared._vote',['model'=>$answer])
                     </div>
                     <div class="media-body">
-                        {!!$answer->body!!}
+                        {{$answer->body}}
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="ml-auto">
@@ -47,3 +48,4 @@
         </div>
     </div>
 </div>
+@endif

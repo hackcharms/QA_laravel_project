@@ -25,7 +25,7 @@
                                 @include('shared._vote',['model'=>$question])
                             </div>
                             <div class="media-body">
-                                {!!htmlspecialchars($question->body)!!}
+                                {{$question->body}}
                                 {{-- <br> --}}
                                 {{-- <div class="float-right">
                                 </div> --}}
