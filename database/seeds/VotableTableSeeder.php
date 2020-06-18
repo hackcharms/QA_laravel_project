@@ -1,5 +1,6 @@
 <?php
 
+use App\Answer;
 use App\Question;
 use App\User;
 use Illuminate\Database\Seeder;
@@ -23,11 +24,13 @@ class VotableTableSeeder extends Seeder
             for($i=0;$i<rand(1,$numberOfUsers);$i++)
             {
                 $users[$i]->voteQuestion($question,$votes[rand(0,1)]);
+            }}
+            foreach(Answer::all() as $answer)
+            {
+            for($i=0;$i<rand(1,$numberOfUsers);$i++)
+            {
+                $users[$i]->voteAnswer($answer,$votes[rand(0,1)]);
             }
-            // for($i=0;$i<rand(1,$numberOfUsers);$i++)
-            // {
-            //     $users[$i]->voteAnswer($question,$votes[rand(0,1)]);
-            // }
 
         }
     }
