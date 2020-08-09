@@ -1,13 +1,13 @@
 <h2>ScreenShots</h2>
-<p align="center"><img src="./Screenshot (104).png" width="400"></p>
+<p align="center"><img src="./Screenshot (104).png" width="100%"></p>
 <p align="center"> All Questions Page</p>
-<p align="center"><img src="./Screenshot (105).png" width="400"></p>
+<p align="center"><img src="./Screenshot (105).png" width="100%"></p>
 <p align="center"> Ask Question (Create Questions Page)</p>
-<p align="center"><img src="./Screenshot (106).png" width="400"></p>
+<p align="center"><img src="./Screenshot (106).png" width="100%"></p>
 <p align="center"> Questions Answer Section </p>
-<p align="center"><img src="./Screenshot (107).png" width="400"></p>
+<p align="center"><img src="./Screenshot (107).png" width="100%"></p>
 <p align="center"> Add Your Answer Page</p>
-<p align="center"><img src="./Screenshot (116).png" width="400"></p>
+<p align="center"><img src="./Screenshot (116).png" width="100%"></p>
 <p align="center"> Question owner can Mark any Answer As Best Answer ,can delete any Answer. Question can be only delete if no answer is added . </p>
 
 
